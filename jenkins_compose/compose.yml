@@ -10,7 +10,6 @@ services:
       - 50000
       - 8080
     volumes:
-      - /tmp:/tmp:rw
       - ../jenkins/jenkins_home:/var/jenkins_home:rw
       - ../bootstrap-docker-builds:/src/bootstrap-docker-builds:ro
       - /usr/bin/docker:/usr/bin/docker:ro
@@ -19,6 +18,7 @@ services:
       - /usr/lib/x86_64-linux-gnu/:/external_libs/usr/lib64:ro
     environment:
       - "LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu:/external_libs/lib64:/external_libs/usr/lib64"
+      - "JAVA_OPTS=-Djava.io.tmpdir=/var/jenkins_home/tmp"
 
   pound:
     image: docker.sunet.se/pound:latest
