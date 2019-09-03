@@ -28,6 +28,7 @@
       <removedViewAction>DELETE</removedViewAction>
       <removedConfigFilesAction>DELETE</removedConfigFilesAction>
       <lookupStrategy>JENKINS_ROOT</lookupStrategy>
+      <additionalClasspath>lib/*.jar</additionalClasspath>
     </javaposse.jobdsl.plugin.ExecuteDslScripts>
   </builders>
   <publishers/>
