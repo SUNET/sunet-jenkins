@@ -15,13 +15,14 @@
   <triggers/>
   <concurrentBuild>false</concurrentBuild>
   <builders>
-    <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.69">
+    <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.76">
       <targets>github_docker_repos.groovy</targets>
       <usingScriptText>false</usingScriptText>
       <sandbox>false</sandbox>
       <ignoreExisting>false</ignoreExisting>
       <ignoreMissingFiles>false</ignoreMissingFiles>
       <failOnMissingPlugin>false</failOnMissingPlugin>
+      <failOnSeedCollision>false</failOnSeedCollision>
       <unstableOnDeprecation>false</unstableOnDeprecation>
       <removedJobAction>DELETE</removedJobAction>
       <removedViewAction>DELETE</removedViewAction>
@@ -31,13 +32,13 @@
   </builders>
   <publishers/>
   <buildWrappers>
-    <EnvInjectPasswordWrapper plugin="envinject@2.1.5">
+    <EnvInjectPasswordWrapper plugin="envinject@2.2.0">
       <injectGlobalPasswords>false</injectGlobalPasswords>
       <maskPasswordParameters>true</maskPasswordParameters>
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>SLACK_TOKEN</name>
-          <value>{AQAAABAAAAAQGupGaCX7JBh51aXEiprKM/8azTo4kbugW7J+6cK5aPo=}</value>
+          <value>{AQAAABAAAABAMNMnlAr9TqTN3F1+RAavn0qmLaezbQU1JI4wavyBjTAhvIgvyUNhnu5BPKTyKRrt/PDnbRrc6bNXj/D3wZr4s6UhWxM8t2nThwAi8tbZvPo=}</value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
