@@ -14,10 +14,7 @@ services:
       - ../bootstrap-docker-builds:/src/bootstrap-docker-builds:ro
       - /usr/bin/docker:/usr/bin/docker:ro
       - /var/run/docker.sock:/var/run/docker.sock:rw
-      - /lib/x86_64-linux-gnu:/external_libs/lib64/:ro
-      - /usr/lib/x86_64-linux-gnu/:/external_libs/usr/lib64:ro
     environment:
-      - "LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:/lib/x86_64-linux-gnu:/external_libs/lib64:/external_libs/usr/lib64"
       - "JAVA_OPTS=-Djava.io.tmpdir=/var/jenkins_home/tmp"
 
   pound:
