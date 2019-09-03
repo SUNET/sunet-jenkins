@@ -39,7 +39,7 @@
       <passwordEntries>
         <EnvInjectPasswordEntry>
           <name>SLACK_TOKEN</name>
-          <value>{AQAAABAAAABAMNMnlAr9TqTN3F1+RAavn0qmLaezbQU1JI4wavyBjTAhvIgvyUNhnu5BPKTyKRrt/PDnbRrc6bNXj/D3wZr4s6UhWxM8t2nThwAi8tbZvPo=}</value>
+          <value></value>
         </EnvInjectPasswordEntry>
       </passwordEntries>
     </EnvInjectPasswordWrapper>
