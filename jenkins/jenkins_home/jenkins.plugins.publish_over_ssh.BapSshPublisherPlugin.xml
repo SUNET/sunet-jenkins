@@ -1,15 +1,15 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<jenkins.plugins.publish__over__ssh.BapSshPublisherPlugin_-Descriptor plugin="publish-over-ssh@1.19.1">
+<jenkins.plugins.publish__over__ssh.BapSshPublisherPlugin_-Descriptor plugin="publish-over-ssh@1.20.1">
   <hostConfigurations>
     <jenkins.plugins.publish__over__ssh.BapSshHostConfiguration>
       <name>pypi.sunet.se</name>
       <hostname>pypi.sunet.se</hostname>
       <username>pypi</username>
-      <secretPassword>{AQAAABAAAAAQRB8RglpIQkXqeYlAgA3HCBP7jQVgHudXYbcGfxUcPTs=}</secretPassword>
+      <secretPassword></secretPassword>
       <remoteRootDir>/home/pypi/packages/</remoteRootDir>
       <port>22</port>
       <commonConfig class="jenkins.plugins.publish_over_ssh.BapSshCommonConfiguration">
-        <secretPassphrase>{AQAAABAAAAAQGMfdIT54jEnHKDWasN/XhqSZgjwUFggg0kROqL5CsBE=}</secretPassphrase>
+        <secretPassphrase></secretPassphrase>
         <key></key>
         <keyPath></keyPath>
         <disableAllExec>false</disableAllExec>
@@ -18,7 +18,7 @@
       <overrideKey>false</overrideKey>
       <disableExec>false</disableExec>
       <keyInfo>
-        <secretPassphrase>{AQAAABAAAAAQ/+WA1uvVW7f7ctJKsX1ZOiksD1jl0m4u5GYcPp4L8oI=}</secretPassphrase>
+        <secretPassphrase></secretPassphrase>
         <key></key>
         <keyPath></keyPath>
       </keyInfo>
