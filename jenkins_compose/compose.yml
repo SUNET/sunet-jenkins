@@ -10,12 +10,14 @@ services:
       - 50000
       - 8080
     volumes:
-      - ../jenkins/jenkins_home:/var/jenkins_home:rw
+# Enable named jenkins_home volume if you would like a persistent jenkins_home
+# Othervise, jcasc and job-dsl will populate one.
+#      - jenkins_home:/var/jenkins_home:rw
+      - ../jcasc_configs/jenkins.yaml:/var/jenkins_home/jenkins.yaml:ro
+      - ../jcasc_configs/publish_over_ssh.groovy:/var/jenkins_home/init.groovy.d/publish_over_ssh.groovy:ro
       - ../bootstrap-docker-builds:/src/bootstrap-docker-builds:ro
       - /usr/bin/docker:/usr/bin/docker:ro
       - /var/run/docker.sock:/var/run/docker.sock:rw
-    environment:
-      - "JAVA_OPTS=-Djava.io.tmpdir=/var/jenkins_home/tmp"
 
   pound:
     image: docker.sunet.se/pound:latest
@@ -32,6 +34,8 @@ services:
     depends_on:
       - jenkins
 
+#volumes:
+#  jenkins_home:
 
 networks:
   jenkins_net:

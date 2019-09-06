@@ -1,0 +1,129 @@
+# vim: ts=2 sts=2 sw=2 et
+jenkins:
+  numExecutors: 2
+  mode: NORMAL
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  globalNodeProperties:
+    - envVars:
+        env:
+          - key: PIP_DOWNLOAD_CACHE
+            value: /var/cache/jenkins/pip
+
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+
+  # TODO: Move to "develop" context
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          password: "admin"
+
+  remotingSecurity:
+    enabled: true
+
+unclassified:
+  location:
+    url: https://jenkins.jenkins.docker/
+
+  sshPublisher:
+    commonConfig:
+      disableAllExec: false
+# Not supported yet.
+# We're doing this in groovy instead.
+#    hostConfigurations:
+#      - BapSshHostConfiguration:
+#          name: pypi.sunet.se
+#          hostname: pypi.sunet.se
+#          username: pypi
+#          remoteRootDir: /home/pypi/packages/
+
+tool:
+  git:
+    installations:
+      - name: Default
+        home: git
+
+# We need to disable jobdsl security due to our Yaml library used in jobdsl.
+security:
+  GlobalJobDslSecurityConfiguration:
+    useScriptSecurity: false
+
+
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+        - string:
+            description: "Token to send notifications to Sunet Slack"
+            id: 'SLACK_TOKEN'
+            scope: 'GLOBAL'
+            secret: '${SLACK_TOKEN}'
+
+
+jobs:
+  - script: >
+      job('bootstrap-docker-builds') {
+          /* OK, use this when we're rid of the needed yaml library,
+          and can start to run job-dsl in sandbox
+          properties {
+              authorizeProjectProperty {
+                  strategy {
+                      specificUsersAuthorizationStrategy {
+                          userid('admin')
+                          useApitoken(false)
+                          apitoken('')
+                          password('')
+                      }
+                  }
+              }
+          }
+          */
+          triggers {
+              // put the job on a cron to run in 1 minute after the rest of the casc configuration finishes loading
+              // This is to workaround the fact that queue() doesn't work here, because the queue haven't inited yet.
+              def currentDate = new Date()
+              currentDate.set(minute: currentDate.minutes + 1)
+              def delay = currentDate
+              def cron_1_minute = '' + delay.getMinutes() + ' ' + delay.getHours() + ' ' + delay[Calendar.DAY_OF_MONTH] + ' ' + (delay.getMonth()+1) + ' *'
+              cron(cron_1_minute)
+          }
+          wrappers {
+              credentialsBinding {
+                  string {
+                      variable('SLACK_TOKEN')
+                      credentialsId('SLACK_TOKEN')
+                  }
+              }
+          }
+          scm {
+              filesystem {
+                  clearWorkspace(true)
+                  copyHidden(false)
+                  path('/src/bootstrap-docker-builds/')
+                  filterSettings {
+                      includeFilter(false)
+                  }
+              }
+          }
+          steps {
+              jobDsl {
+                  targets('github_docker_repos.groovy')
+                  additionalClasspath('lib/*.jar')
+                  sandbox(true)
+                  ignoreExisting(true)
+                  removedJobAction('DELETE')
+                  removedViewAction('DELETE')
+                  removedConfigFilesAction('DELETE')
+                  lookupStrategy("JENKINS_ROOT")
+                  failOnMissingPlugin(true)
+                  unstableOnDeprecation(true)
+              }
+          }
+      }
+# Nope, worked around with cron() instead.
+#  - script: queue('bootstrap-docker-builds')
