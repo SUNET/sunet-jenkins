@@ -48,6 +48,14 @@ tool:
       - name: Default
         home: git
 
+
+# Not supported.
+# We're doing this in groovy instead.
+#locale:
+#  systemLocale: en_US
+#  ignoreAcceptLanguage: true
+
+
 # We need to disable jobdsl security due to our Yaml library used in jobdsl.
 security:
   GlobalJobDslSecurityConfiguration:
