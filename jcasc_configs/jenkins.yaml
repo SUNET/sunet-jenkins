@@ -1,7 +1,8 @@
 # vim: ts=2 sts=2 sw=2 et
 jenkins:
-  numExecutors: 2
-  mode: NORMAL
+  # Don't run jobs on master. Move everything to agents.
+  numExecutors: 0
+  mode: EXCLUSIVE
   crumbIssuer:
     standard:
       excludeClientIPFromCrumb: false
@@ -17,6 +18,40 @@ jenkins:
 
   remotingSecurity:
     enabled: true
+
+  clouds:
+    - docker:
+        name: "Host docker"
+        containerCap: 10
+        dockerApi:
+          dockerHost:
+            uri: "unix:///var/run/docker.sock"
+        templates:
+          - labelString: "jenkins-job"
+            name: "jenkins-job"
+            instanceCapStr: "0"
+            dockerTemplateBase:
+              image: "docker.sunet.se/sunet/jenkins-job"
+              # This is the magic startup command who maps "localhost" to
+              # the docker host machine to have docker run -p xx:yy work
+              # from inside containers.
+              dockerCommand: "/run.sh"
+              # and that run.sh needs a tty to not exit.
+              tty: true
+              # Volumes to run docker-in-docker
+              # and to cache pip downloads
+              volumes:
+                - "/usr/bin/docker:/usr/bin/docker:ro"
+                - "/var/run/docker.sock:/var/run/docker.sock"
+                - "pip_download_cache:/var/cache/jenkins/pip:rw"
+            remoteFs: "/home/jenkins/"
+            connector:
+              attach:
+                user: ""
+            # pullStrategy variable in jcasc
+            # Default to "PROD" value PULL_ALWAYS
+            pullStrategy: "${pullStrategy:-PULL_ALWAYS}"
+
 
 unclassified:
   location:
@@ -116,7 +151,8 @@ jobs:
                   remote {
                       // DEV_MODE is expanded by jcasc
                       if (${DEV_MODE:-false}) {
-                          url('git://git-bootstrap-docker-builds/bootstrap-docker-builds')
+                          // Rely on run.sh localhost mapping, to exposed gitd
+                          url('git://localhost/bootstrap-docker-builds')
                       } else {
                           // When we detect prod, use github directly
                           github('sunet/bootstrap-docker-builds')

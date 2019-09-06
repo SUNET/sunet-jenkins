@@ -10,7 +10,6 @@ services:
       DEV_MODE: "true"
       # TODO: In PROD we need to supply a
       #SLACK_TOKEN: ...
-      JAVA_OPTS: -Djava.io.tmpdir=/var/jenkins_home/tmp
     image: docker.sunet.se/jenkins
     networks:
       jenkins_net:
@@ -27,17 +26,7 @@ services:
       - ../jcasc_configs/publish_over_ssh.groovy:/var/jenkins_home/init.groovy.d/publish_over_ssh.groovy:ro
       - ../jcasc_configs/locale.groovy:/var/jenkins_home/init.groovy.d/locale.groovy:ro
       - ../jcasc_configs/ignored_warnings.groovy:/var/jenkins_home/init.groovy.d/ignored_warnings.groovy:ro
-      - /usr/bin/docker:/usr/bin/docker:ro
       - /var/run/docker.sock:/var/run/docker.sock:rw
-      - jenkins_home:/var/jenkins_home:rw
-    depends_on:
-      - dir_creator
-
-  dir_creator:
-    image: docker.sunet.se/jenkins
-    volumes:
-      - jenkins_home:/var/jenkins_home:rw
-    entrypoint: mkdir /var/jenkins_home/tmp
 
   pound:
     image: docker.sunet.se/pound:latest
@@ -57,18 +46,11 @@ services:
   # TODO: only in dev_mode
   git-bootstrap-docker-builds:
     image: docker.sunet.se/jenkins
-    networks:
-      jenkins_net:
-        aliases:
-          - git-bootstrap-docker-builds
-    expose:
-      - 9418
+    ports:
+      - 9418:9418
     volumes:
       - ../bootstrap-docker-builds:/src/bootstrap-docker-builds:ro
     entrypoint: /usr/bin/git daemon --verbose --base-path=/src/ --export-all
-
-volumes:
-  jenkins_home:
 
 networks:
   jenkins_net:
