@@ -109,12 +109,11 @@ jobs:
               }
           }
           scm {
-              filesystem {
-                  clearWorkspace(true)
-                  copyHidden(false)
-                  path('/src/bootstrap-docker-builds/')
-                  filterSettings {
-                      includeFilter(false)
+              git {
+                  remote {
+                      // TODO: When we detect prod, use github directly
+                      //github('sunet/bootstrap-docker-builds')
+                      url('git://git-bootstrap-docker-builds/bootstrap-docker-builds')
                   }
               }
           }

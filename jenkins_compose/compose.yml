@@ -16,7 +16,6 @@ services:
       - ../jcasc_configs/jenkins.yaml:/var/jenkins_home/jenkins.yaml:ro
       - ../jcasc_configs/publish_over_ssh.groovy:/var/jenkins_home/init.groovy.d/publish_over_ssh.groovy:ro
       - ../jcasc_configs/locale.groovy:/var/jenkins_home/init.groovy.d/locale.groovy:ro
-      - ../bootstrap-docker-builds:/src/bootstrap-docker-builds:ro
       - /usr/bin/docker:/usr/bin/docker:ro
       - /var/run/docker.sock:/var/run/docker.sock:rw
 
@@ -34,6 +33,18 @@ services:
       - "REWRITE_LOCATION=0"
     depends_on:
       - jenkins
+
+  git-bootstrap-docker-builds:
+    image: docker.sunet.se/jenkins
+    networks:
+      jenkins_net:
+        aliases:
+          - git-bootstrap-docker-builds
+    expose:
+      - 9418
+    volumes:
+      - ../bootstrap-docker-builds:/src/bootstrap-docker-builds:ro
+    entrypoint: /usr/bin/git daemon --verbose --base-path=/src/ --export-all
 
 #volumes:
 #  jenkins_home:
