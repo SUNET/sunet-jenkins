@@ -60,6 +60,11 @@ tool:
 security:
   GlobalJobDslSecurityConfiguration:
     useScriptSecurity: false
+# Not supported.
+# We're doing this in groovy instead.
+#  updateSiteWarningsConfiguration:
+#    ignoredWarnings:
+#      - 'SECURITY-248'
 
 
 credentials:

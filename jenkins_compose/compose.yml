@@ -16,6 +16,7 @@ services:
       - ../jcasc_configs/jenkins.yaml:/var/jenkins_home/jenkins.yaml:ro
       - ../jcasc_configs/publish_over_ssh.groovy:/var/jenkins_home/init.groovy.d/publish_over_ssh.groovy:ro
       - ../jcasc_configs/locale.groovy:/var/jenkins_home/init.groovy.d/locale.groovy:ro
+      - ../jcasc_configs/ignored_warnings.groovy:/var/jenkins_home/init.groovy.d/ignored_warnings.groovy:ro
       - /usr/bin/docker:/usr/bin/docker:ro
       - /var/run/docker.sock:/var/run/docker.sock:rw
 
