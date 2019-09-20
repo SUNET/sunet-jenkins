@@ -3,6 +3,13 @@ version: '3'
 services:
 
   jenkins:
+    environment:
+      CASC_JENKINS_CONFIG: /var/jenkins_home/casc_configs
+      #TODO: how to make these conditional?
+      pullStrategy: PULL_NEVER
+      DEV_MODE: "true"
+      # TODO: In PROD we need to supply a
+      #SLACK_TOKEN: ...
     image: docker.sunet.se/jenkins
     networks:
       jenkins_net:
@@ -13,7 +20,9 @@ services:
 # Enable named jenkins_home volume if you would like a persistent jenkins_home
 # Othervise, jcasc and job-dsl will populate one.
 #      - jenkins_home:/var/jenkins_home:rw
-      - ../jcasc_configs/jenkins.yaml:/var/jenkins_home/jenkins.yaml:ro
+      - ../jcasc_configs/jenkins.yaml:/var/jenkins_home/casc_configs/jenkins.yaml:ro
+      # TODO: only in dev_mode
+      - ../jcasc_configs/jenkins-dev_mode.yaml:/var/jenkins_home/casc_configs/jenkins-dev_mode.yaml:ro
       - ../jcasc_configs/publish_over_ssh.groovy:/var/jenkins_home/init.groovy.d/publish_over_ssh.groovy:ro
       - ../jcasc_configs/locale.groovy:/var/jenkins_home/init.groovy.d/locale.groovy:ro
       - ../jcasc_configs/ignored_warnings.groovy:/var/jenkins_home/init.groovy.d/ignored_warnings.groovy:ro
@@ -35,6 +44,7 @@ services:
     depends_on:
       - jenkins
 
+  # TODO: only in dev_mode
   git-bootstrap-docker-builds:
     image: docker.sunet.se/jenkins
     networks:
