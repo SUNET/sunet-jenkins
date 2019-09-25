@@ -135,6 +135,7 @@ jobs:
                   lookupStrategy("JENKINS_ROOT")
                   failOnMissingPlugin(true)
                   unstableOnDeprecation(true)
+                  failOnSeedCollision(true)
               }
           }
       }
