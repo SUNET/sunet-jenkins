@@ -8,12 +8,12 @@ fi
 #
 # Set up entrys in /etc/hosts for the containers with externally accessible services
 #
-(printf "172.16.12.100\tjenkins.dev jenkins.jenkins.docker\n";
+(printf '172.16.12.100\tjenkins.dev jenkins.jenkins.docker\n';
 ) \
-    | while read line; do
+    | while read -r line; do
     if ! grep -q "^${line}$" /etc/hosts; then
 	echo "$0: Adding line '${line}' to /etc/hosts"
-	if [ "x`whoami`" = "xroot" ]; then
+	if [ "$(whoami)" = "root" ]; then
 	    echo "${line}" >> /etc/hosts
 	else
 	    echo "${line}" | sudo tee -a /etc/hosts
@@ -24,5 +24,5 @@ fi
 done
 
 ./bin/docker-compose -f jenkins_compose/compose.yml rm -s -f
-./bin/docker-compose -f jenkins_compose/compose.yml up $*
+./bin/docker-compose -f jenkins_compose/compose.yml up "$@"
 ./bin/docker-compose -f jenkins_compose/compose.yml logs -tf
