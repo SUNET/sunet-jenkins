@@ -128,7 +128,7 @@ jobs:
                   targets('github_docker_repos.groovy')
                   additionalClasspath('lib/*.jar')
                   sandbox(true)
-                  ignoreExisting(true)
+                  ignoreExisting(false)
                   removedJobAction('DELETE')
                   removedViewAction('DELETE')
                   removedConfigFilesAction('DELETE')
