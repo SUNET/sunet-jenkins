@@ -132,7 +132,7 @@ jobs:
                   removedJobAction('DELETE')
                   removedViewAction('DELETE')
                   removedConfigFilesAction('DELETE')
-                  lookupStrategy("JENKINS_ROOT")
+                  lookupStrategy("SEED_JOB")
                   failOnMissingPlugin(true)
                   unstableOnDeprecation(true)
                   failOnSeedCollision(true)
