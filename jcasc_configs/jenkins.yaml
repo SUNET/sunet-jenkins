@@ -120,6 +120,7 @@ jobs:
                       //github('sunet/bootstrap-docker-builds')
                       url('git://git-bootstrap-docker-builds/bootstrap-docker-builds')
                   }
+                  branch("master")
               }
           }
           steps {
