@@ -15,14 +15,6 @@ jenkins:
     loggedInUsersCanDoAnything:
       allowAnonymousRead: false
 
-  # TODO: Move to "develop" context
-  securityRealm:
-    local:
-      allowsSignup: false
-      users:
-        - id: "admin"
-          password: "admin"
-
   remotingSecurity:
     enabled: true
 
@@ -106,6 +98,12 @@ jobs:
               cron(cron_1_minute)
           }
           wrappers {
+              // DEV_MODE is expanded by jcasc
+              if (${DEV_MODE:-false}) {
+                  environmentVariables {
+                      env('DEV_MODE', '${DEV_MODE}')
+                  }
+              }
               credentialsBinding {
                   string {
                       variable('SLACK_TOKEN')
@@ -116,10 +114,15 @@ jobs:
           scm {
               git {
                   remote {
-                      // TODO: When we detect prod, use github directly
-                      //github('sunet/bootstrap-docker-builds')
-                      url('git://git-bootstrap-docker-builds/bootstrap-docker-builds')
+                      // DEV_MODE is expanded by jcasc
+                      if (${DEV_MODE:-false}) {
+                          url('git://git-bootstrap-docker-builds/bootstrap-docker-builds')
+                      } else {
+                          // When we detect prod, use github directly
+                          github('sunet/bootstrap-docker-builds')
+                      }
                   }
+                  branch("master")
               }
           }
           steps {
@@ -127,13 +130,14 @@ jobs:
                   targets('github_docker_repos.groovy')
                   additionalClasspath('lib/*.jar')
                   sandbox(true)
-                  ignoreExisting(true)
+                  ignoreExisting(false)
                   removedJobAction('DELETE')
                   removedViewAction('DELETE')
                   removedConfigFilesAction('DELETE')
-                  lookupStrategy("JENKINS_ROOT")
+                  lookupStrategy("SEED_JOB")
                   failOnMissingPlugin(true)
                   unstableOnDeprecation(true)
+                  failOnSeedCollision(true)
               }
           }
       }
