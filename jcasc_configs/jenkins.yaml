@@ -91,6 +91,10 @@ security:
 #  updateSiteWarningsConfiguration:
 #    ignoredWarnings:
 #      - 'SECURITY-248'
+# Approve these signatures to let our groovy code run them, while still in sandbox
+  scriptApproval:
+    approvedSignatures:
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods toBoolean java.lang.Boolean"
 
 
 credentials:
