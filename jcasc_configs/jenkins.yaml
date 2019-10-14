@@ -12,18 +12,6 @@ jenkins:
           - key: PIP_DOWNLOAD_CACHE
             value: /var/cache/jenkins/pip
 
-  # TODO: Move to "develop" context
-  securityRealm:
-    local:
-      allowsSignup: false
-      users:
-        - id: "admin"
-          password: "admin"
-
-  authorizationStrategy:
-    loggedInUsersCanDoAnything:
-      allowAnonymousRead: false
-
   remotingSecurity:
     enabled: true
 
@@ -62,9 +50,6 @@ jenkins:
 
 
 unclassified:
-  location:
-    url: https://jenkins.jenkins.docker/
-
   sshPublisher:
     commonConfig:
       disableAllExec: false

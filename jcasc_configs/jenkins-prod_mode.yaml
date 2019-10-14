@@ -1,0 +1,24 @@
+jenkins:
+  securityRealm:
+    github:
+      clientID: "${GITHUB_CLIENT_ID}"
+      clientSecret: "${GITHUB_CLIENT_SECRET}"
+      githubApiUri: "https://api.github.com"
+      githubWebUri: "https://github.com"
+      oauthScopes: "read:org,user:email,repo"
+
+  authorizationStrategy:
+    github:
+      adminUserNames: "johanlundberg,glance-"
+      allowAnonymousJobStatusPermission: false
+      allowAnonymousReadPermission: false
+      allowCcTrayPermission: false
+      allowGithubWebHookPermission: false
+      authenticatedUserCreateJobPermission: false
+      authenticatedUserReadPermission: false
+      organizationNames: "SUNET"
+      useRepositoryPermissions: false
+
+unclassified:
+  location:
+    url: https://ci.sunet.se/

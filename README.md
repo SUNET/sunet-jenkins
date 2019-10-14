@@ -15,6 +15,15 @@ Run start.sh.
 ./start.sh
 ```
 
+### How to run (as) in prod?
+* Clone this repo
+* Create a github Oauth App at https://github.com/settings/developers and put GITHUB_CLIENT_ID GITHUB_CLIENT_SECRET in .env
+* Create and put a SLACK_TOKEN in .env
+* And run it as:
+```bash
+./bin/docker-compose -f jenkins_compose/compose.yml -f jenkins_compose/prod.yml
+```
+
 #### Test build your own repos
 Create a folder, and in that folder create a copy of the bootstrap-docker-builds
 job, and edit its enviorment.

@@ -1,0 +1,21 @@
+---
+version: '3'
+services:
+
+  jenkins:
+    environment:
+      DEV_MODE: "true"
+      pullStrategy: PULL_NEVER
+      # In PROD we need to supply a SLACK_TOKEN, in dev its defaults to empty
+      #SLACK_TOKEN: "${SLACK_TOKEN}"
+    volumes:
+      # Add config based on mode
+      - ../jcasc_configs/jenkins-dev_mode.yaml:/var/jenkins_home/casc_configs/jenkins-dev_mode.yaml:ro
+
+  git-bootstrap-docker-builds:
+    image: docker.sunet.se/jenkins
+    ports:
+      - 9418:9418
+    volumes:
+      - ../bootstrap-docker-builds:/src/bootstrap-docker-builds:ro
+    entrypoint: /usr/bin/git daemon --verbose --base-path=/src/ --export-all
