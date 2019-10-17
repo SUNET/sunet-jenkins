@@ -19,6 +19,8 @@ Run start.sh.
 * Clone this repo
 * Create a github Oauth App at https://github.com/settings/developers and put GITHUB_CLIENT_ID GITHUB_CLIENT_SECRET in .env
 * Create and put a SLACK_TOKEN in .env
+* Get the certificates for the docker host to run agents on and point out those files with DOCKER_SERVER_CA_CERTIFICATE DOCKER_CLIENT_CERTIFICATE DOCKER_CLIENT_KEY in .env
+* Configure the DOCKER_URI pointing to the right host in .env
 * And run it as:
 ```bash
 ./bin/docker-compose -f jenkins_compose/compose.yml -f jenkins_compose/prod.yml

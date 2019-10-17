@@ -21,7 +21,9 @@ jenkins:
         containerCap: 10
         dockerApi:
           dockerHost:
-            uri: "unix:///var/run/docker.sock"
+            credentialsId: "DOCKER_CREDENTAILS"
+            # Credentials are ignored on a unix socket.
+            uri: "${DOCKER_URI:-unix:///var/run/docker.sock}"
         templates:
           - labelString: "jenkins-job"
             name: "jenkins-job"
@@ -96,6 +98,13 @@ credentials:
             id: 'SLACK_TOKEN'
             scope: 'GLOBAL'
             secret: '${SLACK_TOKEN}'
+        - dockerServer:
+            id: "DOCKER_CREDENTAILS"
+            description: "Credentials to access our docker host"
+            scope: 'GLOBAL'
+            serverCaCertificate: '${DOCKER_SERVER_CA_CERTIFICATE}'
+            clientCertificate: '${DOCKER_CLIENT_CERTIFICATE}'
+            clientKeySecret: '${DOCKER_CLIENT_KEY}'
 
 
 jobs:
