@@ -16,6 +16,7 @@ services:
       # Add config based on mode
       - ../jcasc_configs/jenkins-prod_mode.yaml:/var/jenkins_home/casc_configs/jenkins-prod_mode.yaml:ro
     secrets:
+      - PUBLISH_OVER_SSH_KEY
       - DOCKER_SERVER_CA_CERTIFICATE
       - DOCKER_CLIENT_CERTIFICATE
       - DOCKER_CLIENT_KEY
@@ -33,6 +34,8 @@ services:
       - "ACME_URL=http://acme-c.sunet.se"
 
 secrets:
+  PUBLISH_OVER_SSH_KEY:
+    file: ${PUBLISH_OVER_SSH_KEY?PUBLISH_OVER_SSH_KEY not set, set it in .env and point it to the right file}
   DOCKER_SERVER_CA_CERTIFICATE:
     file: ${DOCKER_SERVER_CA_CERTIFICATE:?DOCKER_SERVER_CA_CERTIFICATE not set, set it in .env and point it to the right file}
   DOCKER_CLIENT_CERTIFICATE:
