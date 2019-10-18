@@ -1,0 +1,40 @@
+jenkins:
+  securityRealm:
+    github:
+      clientID: "${GITHUB_CLIENT_ID}"
+      clientSecret: "${GITHUB_CLIENT_SECRET}"
+      githubApiUri: "https://api.github.com"
+      githubWebUri: "https://github.com"
+      oauthScopes: "read:org,user:email,repo"
+
+  authorizationStrategy:
+    github:
+      adminUserNames: "${GITHUB_ADMIN_USERNAMES}"
+      allowAnonymousJobStatusPermission: false
+      allowAnonymousReadPermission: false
+      allowCcTrayPermission: true
+      allowGithubWebHookPermission: true
+      authenticatedUserCreateJobPermission: false
+      authenticatedUserReadPermission: false
+      organizationNames: "SUNET"
+      useRepositoryPermissions: true
+
+unclassified:
+  gitHubPluginConfig:
+    hookUrl: "https://ci.sunet.se/github-webhook/"
+    configs:
+    - credentialsId: "sunet"
+      name: "github"
+  location:
+    url: https://ci.sunet.se/
+    adminAddress: dev@sunet.se
+
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+        - string:
+          # Yea, verbatim copy from previous enviorment
+          description: "leifj personal access token for github"
+          id: "sunet"
+          secret: "${GITHUB_TOKEN}"

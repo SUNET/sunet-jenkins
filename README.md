@@ -1,11 +1,5 @@
 ### Setup
 Clone this repo.
-Create a symlink from /var/jenkins_home to /var/lib/docker/volumes/jenkins_compose_jenkins_home/_data
-(This togeather with JAVA_OPTS=-Djava.io.tmpdir=/var/jenkins_home/tmp is
-needed to get docker-custom-build-environment to work in docker in docker setup)
-```bash
-ln -s /var/lib/docker/volumes/jenkins_compose_jenkins_home/_data /var/jenkins_home
-```
 Create a symlink to or clone the repo [bootstrap-docker-builds](https://github.com/SUNET/bootstrap-docker-builds) in /path/to/sunet-jenkins-developer/bootstrap-docker-builds.
 ```bash
 git clone git@github.com:SUNET/bootstrap-docker-builds.git /path/to/sunet-jenkins-developer/
@@ -19,6 +13,17 @@ make -C /path/to/docker-jenkins-job -j all_extra_job_docker_wrapper
 Run start.sh.
 ```bash
 ./start.sh
+```
+
+### How to run (as) in prod?
+* Clone this repo
+* Create a github Oauth App at https://github.com/settings/developers and put GITHUB_CLIENT_ID GITHUB_CLIENT_SECRET in .env
+* Create and put a SLACK_TOKEN in .env
+* Get the certificates for the docker host to run agents on and point out those files with DOCKER_SERVER_CA_CERTIFICATE DOCKER_CLIENT_CERTIFICATE DOCKER_CLIENT_KEY in .env
+* Configure the DOCKER_URI pointing to the right host in .env
+* And run it as:
+```bash
+./bin/docker-compose -f jenkins_compose/compose.yml -f jenkins_compose/prod.yml
 ```
 
 #### Test build your own repos

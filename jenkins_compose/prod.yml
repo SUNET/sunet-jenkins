@@ -1,0 +1,44 @@
+---
+version: '3.7'
+services:
+
+  jenkins:
+    # TODO: Move this to secrets?
+    environment:
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:?GITHUB_CLIENT_ID not set, set it in .env}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET:?GITHUB_CLIENT_SECRET not set, set it in .env}
+      SLACK_TOKEN: ${SLACK_TOKEN?SLACK_TOKEN not set, set it in .env}
+      DOCKER_URI: ${DOCKER_URI?DOCKER_URInot set, set it in .env}
+    volumes:
+# Enable named jenkins_home volume if you would like a persistent jenkins_home
+# Othervise, jcasc and job-dsl will populate one.
+#      - jenkins_home:/var/jenkins_home:rw
+      # Add config based on mode
+      - ../jcasc_configs/jenkins-prod_mode.yaml:/var/jenkins_home/casc_configs/jenkins-prod_mode.yaml:ro
+    secrets:
+      - PUBLISH_OVER_SSH_KEY
+      - DOCKER_SERVER_CA_CERTIFICATE
+      - DOCKER_CLIENT_CERTIFICATE
+      - DOCKER_CLIENT_KEY
+
+  pound:
+    volumes:
+      # TODO: Handle this in some other way?
+      - <%= @dehydrated_bundle %>:/etc/ssl/private/ci.sunet.se.pem
+
+  always-https:
+    image: docker.sunet.se/always-https
+    ports:
+      - 80:80
+    environment:
+      - "ACME_URL=http://acme-c.sunet.se"
+
+secrets:
+  PUBLISH_OVER_SSH_KEY:
+    file: ${PUBLISH_OVER_SSH_KEY?PUBLISH_OVER_SSH_KEY not set, set it in .env and point it to the right file}
+  DOCKER_SERVER_CA_CERTIFICATE:
+    file: ${DOCKER_SERVER_CA_CERTIFICATE:?DOCKER_SERVER_CA_CERTIFICATE not set, set it in .env and point it to the right file}
+  DOCKER_CLIENT_CERTIFICATE:
+    file: ${DOCKER_CLIENT_CERTIFICATE:?DOCKER_CLIENT_CERTIFICATE not set, set it in .env and point it to the right file}
+  DOCKER_CLIENT_KEY:
+    file: ${DOCKER_CLIENT_KEY:?DOCKER_CLIENT_KEY not set, set it in .env and point it to the right file}
