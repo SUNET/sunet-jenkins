@@ -3,6 +3,8 @@ version: '3.7'
 services:
 
   jenkins:
+    # In prod we use the image tagged stable
+    image: docker.sunet.se/sunet/docker-jenkins:stable
     # TODO: Move this to secrets?
     environment:
       GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:?GITHUB_CLIENT_ID not set, set it in .env}
