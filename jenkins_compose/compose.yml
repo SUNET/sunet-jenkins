@@ -5,7 +5,7 @@ services:
   jenkins:
     environment:
       CASC_JENKINS_CONFIG: /var/jenkins_home/casc_configs
-    image: docker.sunet.se/jenkins
+    image: docker.sunet.se/sunet/docker-jenkins
     networks:
       jenkins_net:
     expose:
