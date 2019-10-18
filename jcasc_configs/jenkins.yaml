@@ -29,7 +29,7 @@ jenkins:
             name: "jenkins-job"
             instanceCapStr: "0"
             dockerTemplateBase:
-              image: "docker.sunet.se/sunet/jenkins-job"
+              image: "docker.sunet.se/sunet/docker-jenkins-job"
               # This is the magic startup command who maps "localhost" to
               # the docker host machine to have docker run -p xx:yy work
               # from inside containers.
