@@ -23,8 +23,7 @@ services:
 
   pound:
     volumes:
-      # TODO: Handle this in some other way?
-      - <%= @dehydrated_bundle %>:/etc/ssl/private/ci.sunet.se.pem
+      - ${DEHYDRATED_BUNDLE:?DEHYDRATED_BUNDLE not set, set it in .env}:/etc/ssl/private/ci.sunet.se.pem
 
   always-https:
     image: docker.sunet.se/always-https
