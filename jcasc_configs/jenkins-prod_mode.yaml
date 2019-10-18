@@ -34,7 +34,7 @@ credentials:
     domainCredentials:
       - credentials:
         - string:
-          # Yea, verbatim copy from previous enviorment
-          description: "leifj personal access token for github"
-          id: "sunet"
-          secret: "${GITHUB_TOKEN}"
+            # Yea, verbatim copy from previous enviorment
+            description: "leifj personal access token for github"
+            id: "sunet"
+            secret: "${GITHUB_TOKEN}"
