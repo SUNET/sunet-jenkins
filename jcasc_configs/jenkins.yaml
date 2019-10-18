@@ -145,12 +145,6 @@ jobs:
                       env('DEV_MODE', '${DEV_MODE}')
                   }
               }
-              credentialsBinding {
-                  string {
-                      variable('SLACK_TOKEN')
-                      credentialsId('SLACK_TOKEN')
-                  }
-              }
           }
           scm {
               git {
