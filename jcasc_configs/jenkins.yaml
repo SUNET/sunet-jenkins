@@ -52,6 +52,10 @@ jenkins:
 
 
 unclassified:
+  gitSCM:
+    createAccountBasedOnEmail: false
+    globalConfigEmail: "dev@sunet.se"
+    globalConfigName: "jenkins"
   sshPublisher:
     commonConfig:
       disableAllExec: false
