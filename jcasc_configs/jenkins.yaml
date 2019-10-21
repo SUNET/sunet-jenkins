@@ -139,9 +139,8 @@ jobs:
               currentDate.set(minute: currentDate.minutes + 1)
               def delay = currentDate
               def cron_1_minute = '' + delay.getMinutes() + ' ' + delay.getHours() + ' ' + delay[Calendar.DAY_OF_MONTH] + ' ' + (delay.getMonth()+1) + ' *'
-              cron(cron_1_minute)
               // And after that, run it every 15 minutes to pick up any changes in any github repo
-              cron("H/15  * * * *")
+              cron(cron_1_minute + '\n' + 'H/15  * * * *')
           }
           wrappers {
               // DEV_MODE is expanded by jcasc
