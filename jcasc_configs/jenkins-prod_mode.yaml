@@ -5,7 +5,7 @@ jenkins:
       clientSecret: "${GITHUB_CLIENT_SECRET}"
       githubApiUri: "https://api.github.com"
       githubWebUri: "https://github.com"
-      oauthScopes: "read:org,user:email,repo"
+      oauthScopes: "read:org,user:email"
 
   authorizationStrategy:
     github:
