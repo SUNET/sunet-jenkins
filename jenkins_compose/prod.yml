@@ -10,7 +10,7 @@ services:
       GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID:?GITHUB_CLIENT_ID not set, set it in .env}
       GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET:?GITHUB_CLIENT_SECRET not set, set it in .env}
       SLACK_TOKEN: ${SLACK_TOKEN?SLACK_TOKEN not set, set it in .env}
-      DOCKER_URI: ${DOCKER_URI?DOCKER_URInot set, set it in .env}
+      DOCKER_URI: ${DOCKER_URI?DOCKER_URI not set, set it in .env}
     volumes:
 # Enable named jenkins_home volume if you would like a persistent jenkins_home
 # Othervise, jcasc and job-dsl will populate one.
