@@ -11,6 +11,8 @@ services:
     volumes:
       # Add config based on mode
       - ../jcasc_configs/jenkins-dev_mode.yaml:/var/jenkins_home/casc_configs/jenkins-dev_mode.yaml:ro
+      # Add the local docker-socket for running agents on.
+      - /var/run/docker.sock:/var/run/docker.sock:rw
 
   git-bootstrap-docker-builds:
     image: docker.sunet.se/jenkins
