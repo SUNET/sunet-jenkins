@@ -9,7 +9,7 @@ def configuration = new BapSshHostConfiguration()
 configuration.name = "pypi.sunet.se"
 configuration.hostname = "pypi.sunet.se"
 configuration.username = "pypi"
-configuration.remoteRootDir = "/home/pypi/packages/"
+configuration.remoteRootDir = "/packages"
 // We need to override the implicit default of 0 to the actual default
 configuration.port = configuration.DEFAULT_PORT
 // If we have a /run/secrets/PUBLISH_OVER_SSH_KEY configure it as key
