@@ -24,5 +24,5 @@ fi
 done
 
 ./bin/docker-compose -f jenkins_compose/compose.yml -f jenkins_compose/dev.yml rm -s -f
-./bin/docker-compose -f jenkins_compose/compose.yml -f jenkins_compose/dev.yml up "$@"
+./bin/docker-compose -f jenkins_compose/compose.yml -f jenkins_compose/dev.yml up --abort-on-container-exit --exit-code-from jenkins "$@"
 ./bin/docker-compose -f jenkins_compose/compose.yml -f jenkins_compose/dev.yml logs -tf
