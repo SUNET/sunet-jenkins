@@ -48,3 +48,5 @@ secrets:
     file: ${DOCKER_CLIENT_CERTIFICATE:?DOCKER_CLIENT_CERTIFICATE not set, set it in .env and point it to the right file}
   DOCKER_CLIENT_KEY:
     file: ${DOCKER_CLIENT_KEY:?DOCKER_CLIENT_KEY not set, set it in .env and point it to the right file}
+  GNUPG_KEYRING:
+    file: ${GNUPG_KEYRING:?GNUPG_KEYRING not set, set it in .env and point it to the right file}

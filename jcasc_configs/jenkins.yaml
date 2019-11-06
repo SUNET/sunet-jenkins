@@ -109,6 +109,29 @@ credentials:
             serverCaCertificate: '${DOCKER_SERVER_CA_CERTIFICATE}'
             clientCertificate: '${DOCKER_CLIENT_CERTIFICATE}'
             clientKeySecret: '${DOCKER_CLIENT_KEY}'
+# Doesn't work because GNUPG_KEYRING is binary,
+# and we can't pass binary via yaml, it needs to be base64
+# so we create this file in groovy instead.
+#        - file:
+#            id: "GNUPG_KEYRING"
+#            description: "Our default GNUPG pubring.kbx, used for initial trust"
+#            scope: 'GLOBAL'
+#            fileName: "pubring.kbx"
+#            #file: isn't supported
+#            # secretBytes needs base64 encoded data, not binary data as we got here.
+#            #secretBytes: '${GNUPG_KEYRING}'
+
+
+unclassified:
+  globalConfigFiles:
+    configs:
+      - script:
+          id: GPG_WRAPPER
+          name: gpg-wrapper
+          comment: "Our gpg-wrapper to use a gpg keyring provisioned by jenkins into variable GNUPG_KEYRING"
+          content: |
+              #!/bin/bash
+              exec gpg --no-options --no-default-keyring --trustdb-name "$(tempfile)" --keyring "$GNUPG_KEYRING" "$@"
 
 
 jobs:
@@ -154,6 +177,14 @@ jobs:
                       variable('SLACK_TOKEN')
                       credentialsId('SLACK_TOKEN')
                   }
+                  // Provision our keyring to validate against as a file on the agent
+                  file('GNUPG_KEYRING', 'GNUPG_KEYRING')
+              }
+              configFiles {
+                  // And provision our gpg-wrapper to use the keyring GNUPG_KEYRING
+                  custom('GPG_WRAPPER') {
+                      variable('GPG_WRAPPER')
+                  }
               }
           }
           scm {
@@ -172,6 +203,8 @@ jobs:
               }
           }
           steps {
+              // Only run code which we can validate
+              shell('chmod +x "$GPG_WRAPPER" && git -c "gpg.program=$GPG_WRAPPER" verify-commit HEAD')
               jobDsl {
                   targets('github_docker_repos.groovy')
                   additionalClasspath('lib/*.jar')

@@ -16,6 +16,9 @@ services:
       - ../jcasc_configs/publish_over_ssh.groovy:/var/jenkins_home/init.groovy.d/publish_over_ssh.groovy:ro
       - ../jcasc_configs/locale.groovy:/var/jenkins_home/init.groovy.d/locale.groovy:ro
       - ../jcasc_configs/ignored_warnings.groovy:/var/jenkins_home/init.groovy.d/ignored_warnings.groovy:ro
+      - ../jcasc_configs/GNUPG_KEYRING_secret.groovy:/var/jenkins_home/init.groovy.d/GNUPG_KEYRING_secret.groovy:ro
+    secrets:
+      - GNUPG_KEYRING
 
   pound:
     image: docker.sunet.se/pound:latest
