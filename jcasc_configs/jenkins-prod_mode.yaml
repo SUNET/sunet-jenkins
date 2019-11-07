@@ -23,7 +23,7 @@ unclassified:
   gitHubPluginConfig:
     hookUrl: "https://ci.sunet.se/github-webhook/"
     configs:
-    - credentialsId: "sunet"
+    - credentialsId: "GITHUB_TOKEN"
       name: "github"
   location:
     url: https://ci.sunet.se/
@@ -36,5 +36,5 @@ credentials:
         - string:
             # Yea, verbatim copy from previous enviorment
             description: "leifj personal access token for github"
-            id: "sunet"
+            id: "GITHUB_TOKEN"
             secret: "${GITHUB_TOKEN}"
