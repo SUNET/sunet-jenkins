@@ -28,13 +28,3 @@ unclassified:
   location:
     url: https://ci.sunet.se/
     adminAddress: dev@sunet.se
-
-credentials:
-  system:
-    domainCredentials:
-      - credentials:
-        - string:
-            # Yea, verbatim copy from previous enviorment
-            description: "leifj personal access token for github"
-            id: "GITHUB_TOKEN"
-            secret: "${GITHUB_TOKEN}"

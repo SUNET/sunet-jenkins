@@ -120,6 +120,10 @@ credentials:
 #            #file: isn't supported
 #            # secretBytes needs base64 encoded data, not binary data as we got here.
 #            #secretBytes: '${GNUPG_KEYRING}'
+        - string:
+            description: "Github access token"
+            id: "GITHUB_TOKEN"
+            secret: "${GITHUB_TOKEN}"
 
 
 unclassified:
@@ -173,6 +177,10 @@ jobs:
                   }
               }
               credentialsBinding {
+                  string {
+                      variable('GITHUB_TOKEN')
+                      credentialsId('GITHUB_TOKEN')
+                  }
                   // Provision our keyring to validate against as a file on the agent
                   file('GNUPG_KEYRING', 'GNUPG_KEYRING')
               }
