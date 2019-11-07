@@ -173,10 +173,6 @@ jobs:
                   }
               }
               credentialsBinding {
-                  string {
-                      variable('SLACK_TOKEN')
-                      credentialsId('SLACK_TOKEN')
-                  }
                   // Provision our keyring to validate against as a file on the agent
                   file('GNUPG_KEYRING', 'GNUPG_KEYRING')
               }
