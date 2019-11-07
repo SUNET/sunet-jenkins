@@ -5,6 +5,7 @@ services:
   jenkins:
     environment:
       CASC_JENKINS_CONFIG: /var/jenkins_home/casc_configs
+      GITHUB_TOKEN: "${GITHUB_TOKEN}"
     image: docker.sunet.se/sunet/docker-jenkins
     networks:
       jenkins_net:

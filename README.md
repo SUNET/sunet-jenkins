@@ -42,3 +42,12 @@ You can omit REPOS, if you would like it to generate jobs for all your repos.
 Both variables contain json as a string.
 Another usecase is to not enter another ORGS, and just filter out the REPOS
 you're interested in and let your local jenkins build those.
+
+
+#### My github requests are failing!
+java.io.IOException: Server returned HTTP response code: 403 for URL: https://api.github.com/
+
+This is because github is rate limiting your api calls. Go to
+https://github.com/settings/tokens and get yourself a token and put it
+as GITHUB_TOKEN in .env, and you don't run into the request api request
+limit as quickly...
