@@ -42,6 +42,8 @@ You can omit REPOS, if you would like it to generate jobs for all your repos.
 Both variables contain json as a string.
 Another usecase is to not enter another ORGS, and just filter out the REPOS
 you're interested in and let your local jenkins build those.
+One can also put ORGS and/or REPOS in your local .env file, and those
+will be picked up and applied when running in dev mode.
 
 
 #### My github requests are failing!
