@@ -15,7 +15,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:rw
 
   git-bootstrap-docker-builds:
-    image: docker.sunet.se/jenkins
+    image: docker.sunet.se/sunet/docker-jenkins
     ports:
       - 9418:9418
     volumes:
