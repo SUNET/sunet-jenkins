@@ -223,6 +223,28 @@ jobs:
                   failOnSeedCollision(true)
               }
           }
+          // DEV_MODE is expanded by jcasc
+          if (!${DEV_MODE:-false}) {
+              // Only send slack notifications in prod mode.
+              publishers {
+                  slackNotifier {
+                      teamDomain('SUNET')
+                      tokenCredentialId('SLACK_TOKEN')
+                      room('devops-builds')
+                      notifyAborted(true)
+                      notifyFailure(true)
+                      notifyNotBuilt(true)
+                      notifyUnstable(true)
+                      notifyBackToNormal(true)
+                      notifySuccess(false)
+                      notifyRepeatedFailure(true)
+                      startNotification(false)
+                      includeTestSummary(false)
+                      includeCustomMessage(false)
+                      commitInfoChoice('NONE')
+                  }
+              }
+          }
       }
 # Nope, worked around with cron() instead.
 #  - script: queue('bootstrap-docker-builds')
