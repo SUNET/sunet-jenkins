@@ -10,11 +10,18 @@ services:
       #SLACK_TOKEN: "${SLACK_TOKEN}"
       REPOS: "${REPOS-}"
       ORGS: "${ORGS-}"
+    expose:
+      # expose jenkins ssh sever
+      - 8022
     volumes:
       # Add config based on mode
       - ../jcasc_configs/jenkins-dev_mode.yaml:/var/jenkins_home/casc_configs/jenkins-dev_mode.yaml:ro
       # Add the local docker-socket for running agents on.
       - /var/run/docker.sock:/var/run/docker.sock:rw
+      # Add a ssh key to admin user if one is configured
+      - ../jcasc_configs/admin-public-ssh-key.groovy:/var/jenkins_home/init.groovy.d/admin-public-ssh-key.groovy:ro
+    secrets:
+      - ADMIN_SSH_KEY
 
   git-bootstrap-docker-builds:
     image: docker.sunet.se/sunet/docker-jenkins
@@ -27,3 +34,5 @@ services:
 secrets:
   GNUPG_KEYRING:
     file: ${GNUPG_KEYRING:-~/.gnupg/pubring.kbx}
+  ADMIN_SSH_KEY:
+    file: ${ADMIN_SSH_KEY:-~/.ssh/id_rsa.pub}

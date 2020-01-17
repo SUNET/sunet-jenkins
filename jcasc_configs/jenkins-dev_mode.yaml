@@ -13,3 +13,7 @@ jenkins:
 unclassified:
   location:
     url: https://jenkins.jenkins.docker/
+
+security:
+  SSHD:
+    port: 8022
