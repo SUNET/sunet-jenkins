@@ -45,6 +45,26 @@ you're interested in and let your local jenkins build those.
 One can also put ORGS and/or REPOS in your local .env file, and those
 will be picked up and applied when running in dev mode.
 
+And to test your own branch of bootstrap-docker-builds, just create a folder,
+create a copy of the bootstrap-docker-builds job there and edit its
+branch-field to point to your own branch. This way, its easy to compare how
+your branch works against the current master.
+
+Another trick which is quite handy when running jenkins locally for testing
+is that in dev mode, the jenkins-internal ssh server is enabled and by defaut
+the public key found in X is provisioned on the admin user. The public key
+provisioned can be controlled by pointing the env-var ADMIN_SSH_KEY to
+another file.
+That way, you can access the cli over ssh and trigger builds and look at
+console logs like:
+```
+ssh -l admin -p 8022 172.16.12.2 console -f bootstrap-docker-builds lastBuild
+
+ssh -l admin -p 8022 172.16.12.2 build -sv scripted-pipeline/bootstrap-docker-builds && \
+ssh -l admin -p 8022 172.16.12.2 build -sv scripted-pipeline/simple-fail-page
+```
+Thats a simple way to ad-hoc chain jobs and shorten your test-dev-cycle.
+
 
 #### My github requests are failing!
 java.io.IOException: Server returned HTTP response code: 403 for URL: https://api.github.com/
