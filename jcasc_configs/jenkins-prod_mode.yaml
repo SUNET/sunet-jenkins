@@ -28,3 +28,7 @@ unclassified:
   location:
     url: https://ci.sunet.se/
     adminAddress: dev@sunet.se
+  slackNotifier:
+    room: "#devops-builds"
+    teamDomain: "SUNET"
+    tokenCredentialId: "SLACK_TOKEN"
