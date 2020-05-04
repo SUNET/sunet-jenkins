@@ -94,7 +94,9 @@ security:
 # Approve these signatures to let our groovy code run them, while still in sandbox
   scriptApproval:
     approvedSignatures:
-    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods toBoolean java.lang.Boolean"
+      - "method hudson.EnvVars expand java.lang.String"
+      - "method org.jenkinsci.plugins.workflow.support.actions.EnvironmentAction getEnvironment"
+      - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods toBoolean java.lang.Boolean"
 
 
 credentials:
