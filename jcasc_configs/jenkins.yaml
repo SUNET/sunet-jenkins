@@ -108,7 +108,7 @@ credentials:
             id: 'SLACK_TOKEN'
             scope: 'GLOBAL'
             secret: '${SLACK_TOKEN}'
-        - dockerServer:
+        - x509ClientCert:
             id: "DOCKER_CREDENTAILS"
             description: "Credentials to access our docker host"
             scope: 'GLOBAL'
