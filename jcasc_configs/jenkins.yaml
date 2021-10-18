@@ -38,7 +38,7 @@ jenkins:
               tty: true
               # Volumes to run docker-in-docker
               # and to cache pip downloads
-              volumes:
+              mounts:
                 - "/usr/bin/docker:/usr/bin/docker:ro"
                 - "/var/run/docker.sock:/var/run/docker.sock"
                 - "pip_download_cache:/var/cache/jenkins/pip:rw"
