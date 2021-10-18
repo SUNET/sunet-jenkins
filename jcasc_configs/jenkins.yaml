@@ -39,9 +39,9 @@ jenkins:
               # Volumes to run docker-in-docker
               # and to cache pip downloads
               mounts:
-                - "/usr/bin/docker:/usr/bin/docker:ro"
-                - "/var/run/docker.sock:/var/run/docker.sock"
-                - "pip_download_cache:/var/cache/jenkins/pip:rw"
+                - "type=volume,src=/usr/bin/docker,dst=/usr/bin/docker,readonly"
+                - "type=volume,src=/var/run/docker.sock,dst=/var/run/docker.sock"
+                - "type=volume,src=pip_download_cache,dst=/var/cache/jenkins/pip"
             remoteFs: "/home/jenkins/"
             connector:
               attach:
