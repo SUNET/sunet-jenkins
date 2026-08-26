@@ -4,8 +4,7 @@ jenkins:
   numExecutors: 0
   mode: EXCLUSIVE
   crumbIssuer:
-    standard:
-      excludeClientIPFromCrumb: false
+    standard: {}
   globalNodeProperties:
     - envVars:
         env:
